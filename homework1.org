@@ -105,7 +105,7 @@ The plot of this function with domain boundaries is on Figure \ref{fig:surface}.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=8cm]{./images/func.png}
+\includegraphics[width=8cm]{./func.png}
 \caption{Mishar's Bird function contour plot. The circle is a domain constraint}
 \label{fig:surface}
 \end{figure}
@@ -129,7 +129,7 @@ where $n$ is a dimensionallity of a problem ($n=2$ in our case). Simplex is $\{v
 ** The demonstration of the algorithm 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=8cm]{./images/x0-5-7.png}
+\includegraphics[width=8cm]{./x0-5-7.png}
 \caption{Nelder-Mead algorithm demonstration for Mishar's Bird function. $x0=\{-5, -7\}$, $x^{*}=\{-3.18,-7.82\}$, $f(x^{*})=-87.3108$, $l=1$, tolerance $\epsilon=10^{-4}$, Oracle calls $=146$.}
 \end{figure}
 
@@ -137,9 +137,9 @@ where $n$ is a dimensionallity of a problem ($n=2$ in our case). Simplex is $\{v
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=8cm]{./images/x0-8-7.png}
+\includegraphics[width=8cm]{./x0-8-7.png}
 \caption{Nelder-Mead algorithm demonstration for Mishar's Bird function. $x0=\{-8, -7\}$, $x^{*}=\{-9.19,-7.73\}$, $f(x^{*})=-97.8942$, $l=1$, tolerance $\epsilon=10^{-4}$, Oracle calls $=108$.}
-\includegraphics[width=8cm]{./images/x0-3-4.png}
+\includegraphics[width=8cm]{./x0-3-4.png}
 \caption{Nelder-Mead algorithm demonstration for Mishar's Bird function. $x0=\{-3, -4\}$, $x^{*}=\{-3.13,-1.58\}$, $f(x^{*})=-106.7645$, $l=1$, tolerance $\epsilon=10^{-4}$, Oracle calls $= 125$.}
 \end{figure}
 
@@ -147,17 +147,17 @@ where $n$ is a dimensionallity of a problem ($n=2$ in our case). Simplex is $\{v
 ** Different parameters
 \begin{figure}[H]
 \centering
-\includegraphics[width=8cm]{./images/x0-3-4c01.png}
+\includegraphics[width=8cm]{./x0-3-4c01.png}
 \caption{Nelder-Mead algorithm demonstration for Mishar's Bird function. $x0=\{-3, -4\}$, $x^{*}=\{-2.85,-1.91\}$, $f(x^{*})=-84.5684$, $l=1$, tolerance $\epsilon=10^{-4}$, Oracle calls $= 145$, contraction $\gamma = 0.1$.}
-\includegraphics[width=8cm]{./images/x0-3-4r01.png}
+\includegraphics[width=8cm]{./x0-3-4r01.png}
 \caption{Nelder-Mead algorithm demonstration for Mishar's Bird function. $x0=\{-3, -4\}$, $x^{*}=\{-2.89,-2.48\}$, $f(x^{*})=-42.8311$, $l=1$, tolerance $\epsilon=10^{-4}$, Oracle calls $= 128$, reflection $\rho = 0.1$.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=8cm]{./images/x0-3-4re.png}
+\includegraphics[width=8cm]{./x0-3-4re.png}
 \caption{Nelder-Mead algorithm demonstration for Mishar's Bird function. $x0=\{-3, -4\}$, $x^{*}=\{-3.13,-1.53\}$, $f(x^{*})=-106.4303$, $l=1$, tolerance $\epsilon=10^{-4}$, Oracle calls $= 270$, reflection $\rho = 0.5$ and expansion $\chi = 10$.}
-\includegraphics[width=8cm]{./images/x0-3-4mix.png}
+\includegraphics[width=8cm]{./x0-3-4mix.png}
 \caption{Nelder-Mead algorithm demonstration for Mishar's Bird function. $x0=\{-3, -4\}$, $x^{*}=\{-2.95,-1.53\}$, $f(x^{*})=-102.3585$, $l=1$, tolerance $\epsilon=10^{-4}$, Oracle calls $= 114$, reflection $\rho = 0.5$, expansion $\chi = 10$, contraction $\gamma = 0.1$ and shrinkage $\sigma = 0.9$.}
 \end{figure}
 
@@ -174,9 +174,9 @@ where $e_j$ is a direction over $j\text{th}$ component. And $j$ is cyclic: $j=k\
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=8cm]{./images/x0-3-4cd1.png}
+\includegraphics[width=8cm]{./x0-3-4cd1.png}
 \caption{Coordinate descend algorithm demonstration for Mishar's Bird function. $x0=\{-3, -4\}$, $x^{*}=\{-3.13,-1.58\}$, $f(x^{*})=-106.7645$, $\gamma=0.005$, $\alpha = 10^{-10}$, tolerance $\epsilon=10^{-4}$, Oracle calls $= 47$}
-\includegraphics[width=8cm]{./images/x0-3-4cd2.png}
+\includegraphics[width=8cm]{./x0-3-4cd2.png}
 \caption{Coordinate descend algorithm demonstration for Mishar's Bird function. $x0=\{-3, -4\}$, $x^{*}=\{-3.13,-1.58\}$, $f(x^{*})=-106.7645$, $\gamma=0.001$, $\alpha = 10^{-10}$, tolerance $\epsilon=10^{-4}$, Oracle calls $= 169$}
 \end{figure}
 
