@@ -131,3 +131,6 @@ dmypy.json
 # LaTeX
 *.tex
 .auctex-auto/
+
+# Other
+reading/
