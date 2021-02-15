@@ -33,10 +33,10 @@ Given
 \]
 Let's assign $y=Ax$ then $h(x)=(f\circ y)(x)$. The total derivative $Dh(\mathbf{x})=Df(y(\mathbf{x}))Dy(\mathbf{x})$ (/matrix product/). The gradient is $\nabla(\circ)=(D(\circ))^T$. Thus,
 \[
-   Dh(\mathbf{x}) = Df(y(\mathbf{x}))\mathbf{A}
+   Dh(\mathbf{x}) = Df(y)\mathbf{A}
 \]
 \[
-    \nabla_{\mathbf{x}} h(\mathbf{x}) = \mathbf{A}^T (Df(y(\mathbf{x})))^T = \mathbf{A}^T \nabla_y f(y)
+    \nabla_{\mathbf{x}} h(\mathbf{x}) = \mathbf{A}^T (Df(y))^T = \mathbf{A}^T \nabla_y f(y)
 \]
 Since $f : \mathbb{R}^m\rightarrow\mathbb{R}$, then the dimension of $\nabla_{y}f(y)$ is $m\times 1$ (/denominator-layout/, the gradient is a column vector), and from formula above we can conclude that $(k\times m)\times(m\times 1)=k\times 1$
 
