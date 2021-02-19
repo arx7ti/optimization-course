@@ -170,7 +170,7 @@ $\beta\in(0,1)$ - backtracking algorihm parameter 2\;
  \While{$L^k$ > $\epsilon$}{
     $\alpha\leftarrow \hat{\alpha}$\;
     $p^k\leftarrow -\nabla f(x)$\;
-    \While{$f(x^k + \alpha p^k)>f(x^k) - \gamma\alpha (\nabla f(x^k), p^k)$}{
+    \While{$f(x^k + \alpha p^k)>f(x^k) + \gamma\alpha (\nabla f(x^k), p^k)$}{
         $\alpha\leftarrow \beta\alpha$\;
     }
 $x^{k+1}\leftarrow x^k - \alpha\nabla f(x^k)$\;
@@ -288,6 +288,17 @@ Given
 \]
 ** Given $n=3$ and $x^0=[-1.5,1,\ldots,1]^T$
 *** The first iteration of steepest-descend
+This solution also holds for $n=10$.
+The gradient components:
+\[
+    \frac{\partial}{\partial x_1}f(x^0) = \frac{1}{2}(x_1-1) 8x_1(2x_1^2-x_2-1)=-31.25
+\]
+\[
+    \frac{\partial}{\partial x_2}f(x^0) = 8x_2(2x_2^2-x_3-1) - 2(2x_1^2-x_2-1)=-5
+\]
+\[
+    \frac{\partial}{\partial x_i}f(x^0) = 0\ \text{for }i>=3 
+\]
 
 *** Numerical solution
 For this assignment same steepest-descent algorithm as in previous problem was chosen. The parameters are: tolerance $\epsilon=10^{-3}$, $\gamma=0.1$ and $\beta=0.1$.
@@ -299,7 +310,6 @@ For this assignment same steepest-descent algorithm as in previous problem was c
 Algorithm (SLSQP) converged in 60 iterations. $x^{*}=[0.99999717, 0.99998847, 0.99995387]^T$, $f(x^{*})=2.046\cdot 10^{-12}$.
    
 ** Given $n=10$ and $x^0=[-1.5,1,\ldots,1]^T$
-*** The first iteration of steepest-descend
 *** Numerical solution
 The parameters are: tolerance $\epsilon=10^{-3}$, $\gamma=0.1$ and $\beta=0.1$.
 1) $\alpha^k=\text{argmin} f(x^k-\alpha\nabla f(x^k))$. Converged in 48 iterations. $x^{*}=[1.\ 1.\ 1.\ 1.\ 1.\ 1.\ 1.\ 1.\ 1.\ 1.\ 1.]^T$, $f(x^{*})=9.24\cdot 10^{-9}$.
