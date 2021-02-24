@@ -65,28 +65,28 @@ Equation for $b$:
     \nabla_bf(a,b)=\frac{2}{m}\sum_i^m(ax_i+b-y_i)=0
 \]
 \[
-    b=\sum_i^m(y_i-ax_i)
+    b=\frac{1}{m}\sum_i^m(y_i-ax_i)
 \]
-Substite $b$ to $\nabla_af(a,b)=0$:
+Substitute $b$ to $\nabla_af(a,b)=0$:
 \[
-    \sum_i^m(ax_i+\sum_j^m(y_j-ax_j)-y_i)x_i=0
+    \sum_i^m(ax_i+\frac{1}{m}\sum_j^m(y_j-ax_j)-y_i)x_i=0
 \]
 Let $\frac{1}{m}\sum_j^my_j=\mathbb{E}[y]$ and $\frac{1}{m}\sum_j^mx_j=\mathbb{E}[x]$:
 \[
-    \sum_i^m(ax_i+m(\mathbb{E}[y]-a\mathbb{E}[x])-y_i)x_i=0
+    \sum_i^m(ax_i+\mathbb{E}[y]-a\mathbb{E}[x]-y_i)x_i=0
 \]
 \[
-    \sum_i^m(a(x_i^2-x_i\mathbb{E}[x])+mx_i\mathbb{E}[y])=\sum_i^my_ix_i
+    \sum_i^m(a(x_i^2-x_i\mathbb{E}[x])+x_i\mathbb{E}[y])=\sum_i^my_ix_i
 \]
 \[
-    a\sum_i^m(x_i^2-x_i\mathbb{E}[x])+m\sum_i^m(x_i\mathbb{E}[y])=\sum_i^my_ix_i
+    a\sum_i^m(x_i^2-x_i\mathbb{E}[x])+\sum_i^mx_i\mathbb{E}[y]=\sum_i^my_ix_i
 \]
 \[
-    a=\frac{\sum_i^my_ix_i-m\sum_i^m(x_i\mathbb{E}[y])}{\sum_i^m(x_i^2-x_i\mathbb{E}[x])}
+    a=\frac{\sum_i^my_ix_i-\sum_i^mx_i\mathbb{E}[y]}{\sum_i^m(x_i^2-x_i\mathbb{E}[x])}
 \]
 Dividing numerator and denominator by $m$:
 \[
-    a=\frac{\frac{1}{m}\sum_i^my_ix_i-m\mathbb{E}[x]\mathbb{E}[y]}{\frac{1}{m}\sum_i^m(x_i^2-x_i\mathbb{E}[x])}
+    a=\frac{\frac{1}{m}\sum_i^my_ix_i-\mathbb{E}[x]\mathbb{E}[y]}{\frac{1}{m}\sum_i^mx_i^2-\mathbb{E}[x]\mathbb{E}[x]}=\frac{\frac{1}{m}\sum_i^m(y_ix_i-\mathbb{E}[x]\mathbb{E}[y])}{\frac{1}{m}\sum_i^m(x_i^2-\mathbb{E}[x]^2)}
 \]
 Intuively, the numerator can be rewritten as $\text{cov}(x,y)=\frac{1}{m}\sum_i^m(x_i-\mathbb{E}[x])(y_i-\mathbb{E}[y])$, and the denominator as $\text{var}(x)=\frac{1}{m}\sum_i^m(x_i-\mathbb{E}[x])^2$. Expanding $\text{cov}(x,y)$:
 \[
@@ -104,10 +104,10 @@ Thus, numerator can be rewritten as:
 \]
 Similarly we can rewrite denominator:
 \[
-    \frac{1}{m}\sum_i^m(x_i^2-x_i\mathbb{E}[x])=\frac{1}{m}\sum_i^m(x_i^2-2x_i\mathbb{E}[x]+\mathbb{E}[x]^2) + \frac{1}{m}\sum_i^m(x_i\mathbb{E}[x]-\mathbb{E}[x]^2)=
+    \frac{1}{m}\sum_i^m(x_i^2-\mathbb{E}[x]^2)=\frac{1}{m}\sum_i^m(x_i^2-2x_i\mathbb{E}[x]+\mathbb{E}[x]^2) + \frac{1}{m}\sum_i^m(2x_i\mathbb{E}[x]-2\mathbb{E}[x]^2)=
 \]
 \[
-=\text{var}(x)+\mathbb{E}[x]\mathbb{E}[x]-\mathbb{E}[x]^2=\text{var}(x) 
+=\text{var}(x)+2\mathbb{E}[x]\mathbb{E}[x]-2\mathbb{E}[x]^2=\text{var}(x) 
 \]
 Thus,
 \[
@@ -115,9 +115,9 @@ Thus,
 \]
 And finally $b$:
 \[
-    b = m(\mathbb{E}[y]-\frac{\text{cov}(x,y)}{\text{var}(x)}\mathbb{E}[x])
+    b = \mathbb{E}[y]-\frac{\text{cov}(x,y)}{\text{var}(x)}\mathbb{E}[x]
 \]
-
+*Answer:* $a= \frac{\text{cov}(x,y)}{\text{var}(x)}$, $b = \mathbb{E}[y]-\frac{\text{cov}(x,y)}{\text{var}(x)}\mathbb{E}[x]$
 * Armijo condition
 Given
 \[
