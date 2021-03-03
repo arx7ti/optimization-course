@@ -1,0 +1,123 @@
+#+TITLE: Homework 4 
+#+LATEX_HEADER: \usepackage[left=2cm, right=2cm, bottom=2cm, top=2cm]{geometry}
+#+LATEX_HEADER: \usepackage{float}
+#+LATEX_HEADER: \usepackage[ruled,vlined]{algorithm2e}
+
+
+* Euclidean Ball 
+Given
+\[
+\min_{x\in\mathbb{R}^n : ||x-c||\leq r} ||z-x||
+\]
+Making power of 2 of the objective function and the constraints will not affect the solution, just for simplicity of taking gradients. Thus, the Lagrangian:
+\[
+    \mathcal{L}(x,\lambda) = ||x-z||^2 + \lambda(||x-c||^2-r^2),\ \lambda\ \text{is scalar since}\ \text{$||x-c||^2-r^2$ is also scalar}
+\]
+The dual function $g(\lambda)=\min_x\mathcal{L}(x, \lambda)$. Thus, the gradient:
+\[
+    \nabla_x\mathcal{L}(x,\lambda)|_{x=x^{*}}=2(x^{*}-z)+\lambda(2(x^{*}-c))=0\implies x^{*}=\frac{\lambda c + z}{\lambda + 1}
+\]
+The dual problem:
+\[
+    d^{*} = \max_{\lambda} g(\lambda)=\max_{\lambda} \{||\frac{\lambda c + z}{\lambda+1}-z||^2+\lambda(||\frac{\lambda c + z}{\lambda+1}-c||^2-r^2)\}
+\]
+Or
+\[
+    d^{*} = \max_{\lambda} \{\frac{\lambda^2}{(\lambda+1)^2}||c - z||^2+\lambda(\frac{1}{(\lambda+1)^2}||c - z||^2-r^2)\}=\max_{\lambda}\{\frac{1}{(\lambda + 1)^2}||c-z||^2(\lambda^2 + \lambda)-\lambda r^2\}=
+\]
+\[
+    =\max_{\lambda}\{\frac{\lambda}{\lambda + 1}||c-z||^2-\lambda r^2\}
+\]
+Therefore,
+\[
+    \nabla_{\lambda}g(\lambda)|_{\lambda=\lambda^{*}} = \frac{\lambda^{*}+1-\lambda^{*}}{(\lambda^{*}+1)^2}||c-z||^2-r^2=0\implies(\lambda^{*}+1)^2=\frac{||c-z||^2}{r^2}\implies\lambda^{*}=\frac{||c-z||}{r}-1 
+\]
+Here we took only positive root since $\lambda\geq 0$.
+The dual problem $d^{*}$:
+\[
+
+\]
+
+* projection to the hyperplane
+given
+\[
+    \min_{x\in q : (a,x)=b} ||x-z||
+\]
+the lagrangian:
+\[
+    \mathcal{l}(x,v) = ||x-z||^2 + v((a,x)-b),\ v\ \text{is scalar since}\ (a,x)=b\ \text{is scalar too}
+\]
+\[
+    \nabla_x\mathcal{l}(x,v)|_{x=x^{*}} = 2(x^{*}-z) + va=0
+\]
+\[
+    x^{*} = z - v\frac{a}{2}
+\]
+the dual function is:
+\[
+    g(v) = \min_x\mathcal{l}(x,v)= ||z-v\frac{a}{2}-z||^2 + v((a, z - v\frac{a}{2})-b)
+\] 
+\[
+    g(v) = (v\frac{a}{2}, v\frac{a}{2}) + v((a, z-v\frac{a}{2})-b)=(v\frac{a}{2}, v\frac{a}{2}) + v(a^tz-a^ta\frac{v}{2}-b)=\frac{v^2}{4}(a, a) + v((a,z) - \frac{v}{2}(a,a) - b)
+\]
+\[
+    g(v) = \frac{v^2}{2}(a,a)(\frac{1}{2}-1) -vb+v(a,z)=-\frac{v^2}{4}(a,a)+v((a,z)-b)
+\]
+the dual problem is:
+\[
+    d^{*} = \max_v g(v)
+\]
+\[
+    \nabla_v g(v)|_{v=v^{*}} = -\frac{v^{*}}{2}(a,a) + (a,z)-b = 0\implies v^{*}=2\frac{(a,z)-b}{(a,a)}
+\]
+thus,
+\[
+    d^{*} = g(v^{*}) = -4\frac{((a,z)-b)^2}{4(a,a)^2}(a,a) +2\frac{(a,z)-b}{(a,a)}((a,z)-b)
+\]
+\[
+    d^{*} = -\frac{((a,z)-b)^2}{(a,a)} +2\frac{((a,z)-b)^2}{(a,a)}
+\]
+\[
+    d^{*} =  \frac{((a,z)-b)^2}{(a,a)}
+\]
+*answer:* $d^{*} =  \frac{((a,z)-b)^2}{(a,a)}$
+* primal problem
+given
+\[
+    \min_{(ax,x)\leq 1} (c,x)
+\]
+** derivation
+the lagrangian:
+\[
+    \mathcal{l}(x,\lambda) = (c,x) + \lambda ((ax,x)-1),\ \lambda\ \text{is scalar}\ \text{since $(ax,x)$ is scalar}
+\]
+the dual function:
+\[
+    g(\lambda) = \min_x\mathcal{l}(x,\lambda)
+\]
+thus, the gradient:
+\[
+    \nabla_x\mathcal{l}(x,\lambda)|_{x=x^{*}} = c + 2\lambda ax^{*} = 0\implies x^{*}=-\frac{1}{2\lambda}a^{-1}c
+\]
+and the dual function:
+\[
+    g(\lambda) = -\frac{1}{2\lambda}(c,a^{-1}c) + \lambda (\frac{1}{4\lambda^2}(aa^{-1}c, a^{-1}c)-1)
+\]
+\[
+    g(\lambda) = \frac{1}{2\lambda}(c,a^{-1}c)(\frac{1}{2}-1) - \lambda = -\frac{1}{4\lambda}(c,a^{-1}c) - \lambda 
+\]
+the dual problem:
+\[
+    d^{*} = \max_{\lambda} g(\lambda) = \max_{\lambda}\{ -\frac{1}{4\lambda}(c,a^{-1}c) - \lambda\}
+\]
+** solution
+the gradient over $\lambda$:
+\[
+    \nabla_{\lambda} g(\lambda)|_{\lambda=\lambda^{*}} = \frac{1}{4\lambda^2}(c,a^{-1}c)-1=0\implies\lambda^{*} = \frac{1}{2}\sqrt{(c,a^{-1}c)}\text{since}\ \lambda\geq 0
+\]
+thus, the primal problem has a solution through the dual problem:
+\[
+    d^{*}=-\frac{1}{2\sqrt{(c,a^{-1}c)}}(c,a^{-1}c)-\frac{1}{2}\sqrt{(c,a^{-1}c)}=- \sqrt{(c,a^{-1}c)}
+\]
+
+*answer:* $-\sqrt{(c,a^{-1}c)}$
