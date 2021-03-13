@@ -35,27 +35,28 @@ Therefore,
 Here we took only positive root since $\lambda\geq 0$.
 The dual problem $d^{*}$:
 \[
-
+\frac{\frac{||c-z||}{r}-1}{\frac{||c-z||}{r}}||c-z||^2 - (\frac{||c-z||}{r}-1)r^2=||c-z||^2-2r||c-z|| +r^2=(||c-z||-r)^2
 \]
+*Answer:* $d^{*}=(||c-z||-r)^2$, $x^{*}=\frac{\lambda^{*} c + z}{\lambda^{*} + 1}$, $\lambda^{*}=\frac{||c-z||}{r}-1$
 
-* projection to the hyperplane
-given
+* Projection to the hyperplane
+Given
 \[
     \min_{x\in q : (a,x)=b} ||x-z||
 \]
-the lagrangian:
+The Lagrangian:
 \[
-    \mathcal{l}(x,v) = ||x-z||^2 + v((a,x)-b),\ v\ \text{is scalar since}\ (a,x)=b\ \text{is scalar too}
+    \mathcal{L}(x,v) = ||x-z||^2 + v((a,x)-b),\ v\ \text{is scalar since}\ (a,x)=b\ \text{is scalar too}
 \]
 \[
-    \nabla_x\mathcal{l}(x,v)|_{x=x^{*}} = 2(x^{*}-z) + va=0
+    \nabla_x\mathcal{L}(x,v)|_{x=x^{*}} = 2(x^{*}-z) + va=0
 \]
 \[
     x^{*} = z - v\frac{a}{2}
 \]
-the dual function is:
+The dual function is:
 \[
-    g(v) = \min_x\mathcal{l}(x,v)= ||z-v\frac{a}{2}-z||^2 + v((a, z - v\frac{a}{2})-b)
+    g(v) = \min_x\mathcal{L}(x,v)= ||z-v\frac{a}{2}-z||^2 + v((a, z - v\frac{a}{2})-b)
 \] 
 \[
     g(v) = (v\frac{a}{2}, v\frac{a}{2}) + v((a, z-v\frac{a}{2})-b)=(v\frac{a}{2}, v\frac{a}{2}) + v(a^tz-a^ta\frac{v}{2}-b)=\frac{v^2}{4}(a, a) + v((a,z) - \frac{v}{2}(a,a) - b)
@@ -63,14 +64,14 @@ the dual function is:
 \[
     g(v) = \frac{v^2}{2}(a,a)(\frac{1}{2}-1) -vb+v(a,z)=-\frac{v^2}{4}(a,a)+v((a,z)-b)
 \]
-the dual problem is:
+The dual problem is:
 \[
     d^{*} = \max_v g(v)
 \]
 \[
     \nabla_v g(v)|_{v=v^{*}} = -\frac{v^{*}}{2}(a,a) + (a,z)-b = 0\implies v^{*}=2\frac{(a,z)-b}{(a,a)}
 \]
-thus,
+Thus,
 \[
     d^{*} = g(v^{*}) = -4\frac{((a,z)-b)^2}{4(a,a)^2}(a,a) +2\frac{(a,z)-b}{(a,a)}((a,z)-b)
 \]
@@ -80,44 +81,220 @@ thus,
 \[
     d^{*} =  \frac{((a,z)-b)^2}{(a,a)}
 \]
-*answer:* $d^{*} =  \frac{((a,z)-b)^2}{(a,a)}$
-* primal problem
-given
+*Answer:* $d^{*} =  \frac{((a,z)-b)^2}{(a,a)}$, $x^{*} = z - v^{*}\frac{a}{2}$, $v^{*}=2\frac{(a,z)-b}{(a,a)}$
+* Conjugate function
+Given
+\[
+    \min_{Ax=b}f(x)
+\]
+And conjugate function:
+\[
+    f^{*}(y) = \sup_{x\in\mathbb{R}^n}((x,y)-f(x))
+\]
+So the Lagrangian is given by:
+\[
+    \mathcal{L}(x,v) = f(x) + v^T(Ax-b),\ \text{$v$ is a vector, since $Ax-b$ also vector}
+\]
+The dual function:
+\[
+    g(v) = \inf_x\mathcal{L}(x,v)=\inf_x \{f(x)+(Ax-b)^Tv\} =\inf_x\mathcal{L}(x,v)=\inf_x \{f(x)+x^TA^Tv-b^Tv\}=\inf_x\{f(x)+(x, A^Tv)-(b,v)\} 
+\]
+Taking into account our conjugate function in terms of $y=A^Tv$:
+\[
+    g(v) = \inf_x\{f(x)+(A^Tv,x)-(b,v)\}=-\inf_x\{-f(x)+(-A^Tv,x)+(b,v)\}=-f^{*}(-A^Tv)-(b,v)
+\]
+The domain:
+\[
+    \textbf{\text{dom}}\ g(v) = \{v : -A^Tv\in\textbf{\text{dom}}\ f^{*}\}
+\]
+*Answer:* a) $-f^{*}(-A^Tv)-(b,v)$ b) $\textbf{\text{dom}}\ g(v) = \{v : -A^Tv\in\textbf{\text{dom}}\ f^{*}\}$ 
+
+* Primal problem
+Given
 \[
     \min_{(ax,x)\leq 1} (c,x)
 \]
-** derivation
-the lagrangian:
+** Derivation
+The Lagrangian:
 \[
-    \mathcal{l}(x,\lambda) = (c,x) + \lambda ((ax,x)-1),\ \lambda\ \text{is scalar}\ \text{since $(ax,x)$ is scalar}
+    \mathcal{L}(x,\lambda) = (c,x) + \lambda ((ax,x)-1),\ \lambda\ \text{is scalar}\ \text{since $(ax,x)$ is scalar}
 \]
-the dual function:
+The dual function:
 \[
-    g(\lambda) = \min_x\mathcal{l}(x,\lambda)
+    g(\lambda) = \min_x\mathcal{L}(x,\lambda)
 \]
-thus, the gradient:
+Thus, the gradient:
 \[
-    \nabla_x\mathcal{l}(x,\lambda)|_{x=x^{*}} = c + 2\lambda ax^{*} = 0\implies x^{*}=-\frac{1}{2\lambda}a^{-1}c
+    \nabla_x\mathcal{L}(x,\lambda)|_{x=x^{*}} = c + 2\lambda ax^{*} = 0\implies x^{*}=-\frac{1}{2\lambda}a^{-1}c
 \]
-and the dual function:
+Finally, the dual function:
 \[
     g(\lambda) = -\frac{1}{2\lambda}(c,a^{-1}c) + \lambda (\frac{1}{4\lambda^2}(aa^{-1}c, a^{-1}c)-1)
 \]
 \[
     g(\lambda) = \frac{1}{2\lambda}(c,a^{-1}c)(\frac{1}{2}-1) - \lambda = -\frac{1}{4\lambda}(c,a^{-1}c) - \lambda 
 \]
-the dual problem:
+And the dual problem:
 \[
     d^{*} = \max_{\lambda} g(\lambda) = \max_{\lambda}\{ -\frac{1}{4\lambda}(c,a^{-1}c) - \lambda\}
 \]
-** solution
-the gradient over $\lambda$:
+** Solution
+The gradient over $\lambda$:
 \[
-    \nabla_{\lambda} g(\lambda)|_{\lambda=\lambda^{*}} = \frac{1}{4\lambda^2}(c,a^{-1}c)-1=0\implies\lambda^{*} = \frac{1}{2}\sqrt{(c,a^{-1}c)}\text{since}\ \lambda\geq 0
+    \nabla_{\lambda} g(\lambda)|_{\lambda=\lambda^{*}} = \frac{1}{4\lambda^{*}^2}(c,a^{-1}c)-1=0\implies\lambda^{*} = \frac{1}{2}\sqrt{(c,a^{-1}c)}\ \text{since}\ \lambda\geq 0
 \]
-thus, the primal problem has a solution through the dual problem:
+Thus, the primal problem has a solution through the dual problem:
 \[
     d^{*}=-\frac{1}{2\sqrt{(c,a^{-1}c)}}(c,a^{-1}c)-\frac{1}{2}\sqrt{(c,a^{-1}c)}=- \sqrt{(c,a^{-1}c)}
 \]
 
-*answer:* $-\sqrt{(c,a^{-1}c)}$
+*Answer:* $d^{*}=-\sqrt{(c,a^{-1}c)}$
+
+* Optimization problem
+Given
+\[
+    \min_x \{x^2+1\}
+\]
+Subject to $(x-2)(x-4)\leq 0$. 
+** Analysis of primal problem
+The feasible set is $x\in[2,4]$ (since $(x-2)(x-4)\leq 0$). Optimal solution $x^{*}$ can be obtained from $(x^2+1)'=0$ as $x^{*}=0$, thus the optimal value $p^{*}=1$ -- contradiction with constraints. The very left available $x=2$, indeed, from the plot \ref{fig:plot} we can see that this argument corresponds to the lowest value of the function within given feasible region, thus $p^{*}=2^2+1=5$.
+** Lagrangian and dual function:
+\begin{figure}[!h]
+\centering
+\includegraphics[width=12cm]{./images/hw4p5.png}
+\caption{Lagrangians for different $\lambda$ and the objective function. Feasible region is filled with yellow color.}
+\label{fig:plot}
+\end{figure}
+The Lagrangian:
+\[
+    \mathcal{L}(x,\lambda)=x^2+1+\lambda (x-2)(x-4)\ \text{with scalar $\lambda$}
+\]
+The dual function:
+\[
+    g(\lambda) = \min_x\mathcal{L}(x,\lambda)
+\]
+The optimal solution:
+\[
+    \nabla_x\mathcal{L}(x,\lambda)|_{x=x^{*}} = 2x^{*} +\lambda(x^{*}-4) + \lambda(x^{*}-2) = 0\implies x^{*}=\frac{3\lambda}{1+\lambda}
+\]
+Now the dual function is:
+\[
+    g(\lambda)=(\frac{3\lambda}{1+\lambda})^2 + 1 +\lambda(\frac{3\lambda}{1+\lambda}-2)(\frac{3\lambda}{1+\lambda}-4)=
+\]
+\[
+    (\frac{3\lambda}{1+\lambda})^2 + 1 -\lambda(\frac{\lambda-2}{1+\lambda})(\frac{\lambda+4}{1+\lambda})=
+\]
+\[
+    =\frac{1}{(1+\lambda)^2}(9\lambda^2 + 1 + 2\lambda + \lambda^2 -\lambda(\lambda^2+2\lambda-8))=
+\]
+\[
+    =\frac{1}{(1+\lambda)^2}(8\lambda^2 + 10\lambda -\lambda^3+1)=\frac{1}{(1+\lambda)^2}(\lambda+1)(-\lambda^2+9\lambda+1)=
+\]
+\[
+=\frac{1}{(1+\lambda)}(-\lambda^2+9\lambda+1+8\lambda^2-8\lambda^2)
+=\frac{1}{(1+\lambda)}(-9\lambda^2+9\lambda+1+8\lambda^2)=
+\]
+\[
+=\frac{1}{(1+\lambda)}(-9\lambda^2+(\lambda+1)(8\lambda+1))=\frac{-9\lambda^2}{\lambda+1}+8\lambda+1
+\]
+Lower bound property holds since all the peaks of Lagrangians (for $\lambda\geq 0$) are below $p^{*}$ (see plot \ref{fig:lagrangian}). In the next paragraph you will also see that from optimal solution $\lambda^{*}$ the values of $g(\lambda)$ can't be more than $p^{*}=5$. Even for $\lambda\rightarrow\infty$ the limit $\lim_{\lambda\rightarrow\infty}g(\lambda)=-\infty$.
+\begin{figure}[!h]
+\centering
+\includegraphics[width=12cm]{./images/hw4p52.png}
+\caption{Dual function for $\lambda\geq 0$}
+\label{fig:lagrangian}
+\end{figure}
+** The dual problem
+states that:
+\[
+    d^{*} = \max_{\lambda}g(\lambda)
+\]
+Now we can compute the gradient over $\lambda$:
+\[
+    \nabla_{\lambda}g(\lambda) = \frac{-18\lambda(\lambda+1)+9\lambda^2}{(\lambda+1)^2}+8=\frac{-9\lambda^2-18\lambda}{(\lambda+1)^2}+8=-9\lambda\frac{\lambda+2}{(\lambda+1)^2}+8=0
+\]
+\[
+    9\lambda (\lambda+2) =8(\lambda^2+2\lambda+1)
+\]
+\[
+    \lambda^2 +2\lambda -8=0\implies\lambda^{*}=2\ \text{since $\lambda\geq 0$, the other is $-4$ which is omitted}
+\]
+Thus,
+\[
+    d^{*}=\frac{-36}{3}+16+1=5
+\]
+Strong duality holds if $p^{*}=d^{*}$, in our case $p^{*}=5=d^{*}$ this holds.
+
+* Quadratic programming problem
+Given
+\[
+    \min_x \frac{1}{2}x^TPx + (x,q)
+\]
+Subject to $Ax\leq b$.
+** The dual function
+\[
+    g(\lambda)=\min_x \frac{1}{2}x^TPx + (x,q)+\lambda^T(Ax-b)\ \text{$\lambda$ is vector since $Ax-b$ is vector too}
+\]
+The Lagrangian can be rewritten as:
+\[
+    \mathcal{L}(x,\lambda) = \frac{1}{2}x^TPx + x^Tq + x^TA^T\lambda - \lambda^Tb
+\]
+The gradient over $x$:
+\[
+    \nabla_x\mathcal{L}(x,\lambda)|_{x=x^{*}}=Px^{*} + q + A^T\lambda = 0\implies x^{*}=-P^{-1}q-P^{-1}A^T\lambda
+\]
+Therefore,
+\[
+    g(\lambda) = \frac{1}{2}(-P^{-1}q-P^{-1}A^T\lambda)^TP(-P^{-1}q-P^{-1}A^T\lambda) + (-P^{-1}q-P^{-1}A^T\lambda)^Tq+(-P^{-1}q-P^{-1}A^T\lambda)^TA^T\lambda-\lambda^Tb=
+\]
+\[
+    = (-P^{-1}q-P^{-1}A^T\lambda)^T(\frac{1}{2}P(-P^{-1}q-P^{-1}A^T\lambda) + q + A^T\lambda) -\lambda^Tb=(-P^{-1}q-P^{-1}A^T\lambda)^T(-\frac{1}{2}q-\frac{1}{2}A^T\lambda+q+A^T\lambda)-\lambda^Tb 
+\]
+\[
+    = (-P^{-1}q-P^{-1}A^T\lambda)^T(\frac{1}{2}q+\frac{1}{2}A^T\lambda) -\lambda^Tb=-\frac{1}{2}(P^{-1}(q+A^T\lambda))^T(q+A^T\lambda)-\lambda^Tb=
+\]
+\[
+    = -\frac{1}{2}(q+A^T\lambda)^TP^{-1}(q+A^T\lambda)-\lambda^Tb
+\]
+The optimal $\lambda^{*}$:
+\[
+   \nabla_{\lambda}g(\lambda) = -\frac{1}{2}[\frac{\partial}{\partial\lambda}(q+A^T\lambda)](2P^{-1}(q+A^T\lambda))-b=-AP^{-1}(q+A^T\lambda)-b=0 
+\]
+\[
+-AP^{-1}A^T\lambda = b + AP^{-1}q
+\]
+\[
+    \lambda^{*} = -(AP^{-1}A^T)^{-1}(b+A^TP^{-1}q)
+\]
+The dual problem:
+\[
+    d^{*} = g(\lambda^{*})
+\]
+** Primal from dual
+Primal optimal solution via $\lambda^{*}$ is $x^{*}=-P^{-1}q+P^{-1}A^T(AP^{-1}A^T)^{-1}(b+A^TP^{-1}q)=A^{-1}b$
+
+** ADMM implementation
+At first, we should have augmented Lagrangian:
+\[
+    \mathcal{L}(\lambda,z,y) = -\lambda^Tb - \frac{1}{2}(q+A^T\lambda)^TP^{-1}(q+A^T\lambda) + g(z) + y^T(\lambda-z)+\frac{1}{2}\rho ||\lambda-z||^2
+\]
+Let's assign $Q=\{\lambda : \lambda\geq 0\}$. Keep in mind, that ADMM solves $\min_{\lambda=z}f(\lambda)+I_Q(z)$, where $I_Q(z)=0$ if $z\in Q$ and $I_Q(z)=\infty$ otherwise. Then, the ADMM iterations are:
+\[
+  \lambda(k+1) = \text{argmin}_{\lambda} (-\lambda^Tb - \frac{1}{2}(q+A^T\lambda)^TP^{-1}(q+A^T\lambda)+\frac{1}{2}\rho||\lambda-z(k)+u(k)||^2)  
+\]
+\[
+    z(k+1) = \text{argmin}_z(g(z) + \frac{1}{2}\rho||\lambda(k+1)-z+u(k)||^2)=\textbf{\text{Proj}}_Q(\lambda(k+1)+u(k))
+\]
+\[
+    u(k+1) = u(k) + \lambda(k+1) - z(k+1)
+\]
+Obviously, that $u(k+1)=u(k)+\lambda(k+1)-\textbf{\text{Proj}}_Q(\lambda(k+1)+u(k))=u(k)+\lambda(k+1)-\max(\lambda(k+1)+u(k), 0)=-\max(-u(k)-\lambda(k+1), 0)$.
+** Decomposition
+\[
+    g(\lambda) = -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^nP_{ij}^{-1}(q+A^T\lambda)_i(q+A^T\lambda)_j -\lambda^Tb 
+\]
+As in [Boyd] $\lambda^tb$ is an indicator of convex set. So:
+\[
+    g(\alpha, \beta) = -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^nP_{ij}^{-1}\alpha_i\alpha_j -\beta^Tb 
+\]
+Where the first term is separable since it is a sum of functions of individual variables $\alpha_{i,j}$.

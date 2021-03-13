@@ -1,0 +1,21 @@
+#+TITLE: Project
+
+* Define optimizers
+** SGD
+** SGD with Nesterov momentum
+** ADAM algorithm
+** ADAM with Nesterov momentum
+** Adagrad
+* Define datasets
+# ** MNIST, Fashion-MNIST
+# ** ImageNet/... image recognition
+** /Audio recognition : UrbanSound8k/
+* Define NN architectures
+** Transformer 
+** CNN backbone + LSTM + Linear Network as a head
+** FFN + Attention / Linear Networks with Attention
+* Metrics? Features to compare (characteristics)
+** Convergence curves (during validation/training)
+*** Convergence time (learning time, speed of iteration (iters/sec))
+*** Theoretical (expected/actual conv. rate)
+** Classification metrics during Test stage (mAP, PR-AUC)

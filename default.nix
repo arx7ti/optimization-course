@@ -156,6 +156,7 @@ in
     name = "deep-nilm";
     dependencies = [
       python3
+      glpk
       # qt5.full
     ] ++ (with python38Packages; [
       numba
@@ -166,10 +167,12 @@ in
       pandas
       black
       # jupyterthemes
+      cvxpy
       nbextensions
       sklearn-deap
       matplotlib
-      # seaborn
+      seaborn
+      networkx
       tqdm
       ipykernel
       jupyter
