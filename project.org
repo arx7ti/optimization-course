@@ -1,21 +1,100 @@
 #+TITLE: Project
+#+AUTHOR: Ilia Kamyshev, Emmanuel Akeweje
+#+LATEX_HEADER: \usepackage[left=2cm, right=2cm, bottom=2cm, top=2cm]{geometry}
+#+LATEX_HEADER: \usepackage{float}
+#+LATEX_HEADER: \usepackage[ruled,vlined]{algorithm2e}
 
-* Define optimizers
-** SGD
-** SGD with Nesterov momentum
-** ADAM algorithm
-** ADAM with Nesterov momentum
-** Adagrad
-* Define datasets
-# ** MNIST, Fashion-MNIST
-# ** ImageNet/... image recognition
-** /Audio recognition : UrbanSound8k/
-* Define NN architectures
-** Transformer 
-** CNN backbone + LSTM + Linear Network as a head
-** FFN + Attention / Linear Networks with Attention
-* Metrics? Features to compare (characteristics)
-** Convergence curves (during validation/training)
-*** Convergence time (learning time, speed of iteration (iters/sec))
-*** Theoretical (expected/actual conv. rate)
-** Classification metrics during Test stage (mAP, PR-AUC)
+* Introduction
+One of the main properties of wide class of neural networks is generalization ability, what in common words can be interpreted as: /how good the neural network can predict the labels of samples it never saw before?/. This property is one of the reasons of neural networks to be involved in solving the real business problems (auto-pilot auto, speech recognition, machine translation etc.).
+
+Generalization ability comes after training procedure -- complex optimization problem of adjusting weights (or parameters) of neural network in order to minimize the loss function (measure of difference in results obtained by the model and the actual results). But in fact, if for one chosen optimizer and neural network it is possible to achieve such a tradeoff between weights that will give a suitable practical performance (there is should be such a solution that satisfies both training and unseen examples; in particular, there is an absence of neither overfit, nor underfit), there is no guarantee that it is a global or near-global optimal solution. History of development of optimization theory shows that application of some relatively new class of optimizers with adaptive moment can beat the results of previous algorithms like stochastic gradient descent. 
+
+This project is aimed to check how different well-known optimizers influence the generalization ability of few architectures of neural networks. Studying these relations will automatically resolve following questions:
+1. What optimizer is more relevant to use in practical tasks? (since computational cost on large-scale problems is very high)
+2. Where to pay attention more: on the architecture development; on the optimizer choice? 
+   
+Within this project we decided to conduct the experiments on the ESC50 dataset for enviromental sounds recognition task. This dataset consists from 5 comparable folds of size 400 audio samples each (duration 5s, sampling rate 44.1kHz). There are 50 classes of such sounds (rain, clock tick, train, sea waves...). Since the test data was not provided, we picked one fold at random for test, another one for validation (in order to find suitable hyperparameters of optimizers), the rest 3 folds are used in training.
+* Deep Learning models
+The inputs to the network are mini batches of size 32 from audio samples resampled to 40kHz. Each network makes spectrograms from them with window size 1024 and hop length 320. The examples of these spectrograms are on Figure []. Each spectrogram has following dimensions **[channel]** x **[timestep]** x **[frequency]**. In our case: channel=1, timestep=690, frequency=64.
+** CNN10 model
+ We did not choose state of the art model, since the goal of this study is not to reach maximum possible classification results. We decided to take one of the models from paper on the large scale sound recognition task [], which is CNN10. This model consists from 5 paired convolutional blocks followed by batch normalization, ReLU activation, where average pooling with 2x2 kernel applied to the output of second block to reduce the original dimension of spectrograms. This backbone increases number of channels up to 512. Then, two additional global poolings are applied: averaging over the frequency dimension; sum of maximum and mean values over the time dimension. Therefore, this output passes through two sequential linear layers of sizes 512 and number of classes respectively. The softmax function is applied to the output of the network in order to compute probabilities for each class. 
+** CNN10 with 4 multi-head self-attention layers (CNN10MHSA4)
+This is our improvement of CNN10 just to make a comparable difference with previous architecture. Here instead of the first linear layer after the global pooling we inserted 4 encoder layers from transformer architecture []. The transformer's architrecture is in field of interest among many researchers since it outperforms most of the previous state of the art models in many tasks (from natural language processing to computer vision). The description of this architecture is quite complex and will not be listed in this work, but it can be found in the original paper.
+* Optimization algorithms 
+In this work 6 optimization algorithms were tested, where optimal hyperparameters were found for each one with use of grid search, in particular only step-size (learning-rate) was searched. Some theoretical foundations of these algorithms will be introduced in this section.
+** Stochastic gradient descent (SGD)
+The standard gradient descent updates the parameters of network in following way:
+\[
+w(k+1)=w(k)-\eta\nabla_wL_i(w(k))
+\]
+Where $L_i$ is a loss function evaluated at mini-batch $i$. This called stochastic, because gradients are computed from pass of mini-batch (taken randomly from the entire dataset) through the network.
+** Stochastic gradient descent with momentum (SGD w. momentum)
+Addition of momentum (or inertia) term to the SGD algorithm accelerates the convergence. Updation rule can be rewritten as:
+\[
+v(k)=\gamma v(k-1)+\eta\nabla_wL_i(w(k))
+\]
+\[
+w(k+1)=w(k)-v(k)
+\]
+Where $\gamma\in[0,1]$ is the momentum term. The idea here is to reduce oscillations produced with $\gamma=0$ by letting the gradient vector be increased in the direction of loss function decrease computed with information gained from previous iteration. In this work we used momentum $\gamma=0.5$.
+** Adaptive subgradient method (Adagrad)
+Here the idea is to adapt the learning rate to the vector of trainable parameters $w$. Updation rule for $j$ component is as follows:
+\[
+w_j(k+1)=w_j(k)-\frac{\eta}{\sqrt{\sum_{t=0}^k(\nabla_{w_j}L_i(w_j(t)))^2+\epsilon}}\nabla_{w_j}L_i(w_j(k))
+\]
+In the denominator part the summation has been taken over all previous gradients for $j$ component. The smoothing term $\epsilon$ is needed to avoid division by zero, in this work we set it to $10^{-8}$. The main advantage of this method is to leave the tunning procedure for learning-rate $\eta$. The drawback here is that with number of iterations growing the updation term will decrease due to the accumulation of squared sum under the square root. Generalizing equation above to the all components we will have following point-wise multiplication:
+\[
+w(k+1)=w(k)-\frac{\eta}{\sqrt{G(k)+\epsilon}}\odot\nabla_wL_i(w(k))
+\]
+where $G_{j,j}(k)=\sum_{t=0}^k(\nabla_{w_j}L_i(w_j(t)))^2$ is a $j,j$ element of diagonal matrix.
+** Adaptive learning rate method (Adadelta and RMSprop)
+These two methods mentioned in the heading are same in its common implementation. RMSprop is an unpublished version of Adadelta developed independently by Geoff Hinton in one of his lectures. This method is an extension of previous algorithm. To reduce monotonical decrease of the updation term the squared sum is now recursively defined through decaying average:
+\[
+\mathbb{E}[g^2(k)]=\gamma\mathbb{E}[g^2(k-1)]+(1-\gamma)g^2(k)
+\]
+where $g(k)=\nabla_wL_i(w(k))$. Thus, the updation rule is:
+\[
+w(k+1)=w(k)-\frac{\eta}{\sqrt{\mathbb{E}[g^2(k)]+\epsilon}}\odot g(k)
+\]
+The denominator part is called $RMS[g]$, thats is the way the second name of this method: root mean square propagation.
+** Adaptive Moment Estimation (Adam)
+It is also adaptive learning rate algorithm. Key idea that this method uses two moments: mean and uncentered variance):
+\[
+m(k)=\beta_1m(k-1)+(1-\beta_1)g(k)
+\]
+\[
+v(k)=\beta_2m(k-1)+(1-\beta_2)g^2(k)
+\]
+To avoid bias towards 0 (since initially these moments are filled with 0s) authors suggest to do following:
+\[
+\hat{m}(k)=\frac{m(k)}{1-\beta_1}
+\]
+\[
+\hat{v}(k)=\frac{v(k)}{1-\beta_2}
+\]
+So the updation rule is:
+\[
+w(k+1)=w(k)-\frac{\eta}{\sqrt{\hat{v}(k)+\epsilon}}\odot \hat{m}(k) 
+\]
+In this project we set $\beta_1=0.99$ and $\beta_2=0.999$ as in original paper.
+
+* Numerical experiments
+In order to compare proposed approaches an /Average Precision/ was used as a classification metric for deep neural networks:
+\[
+AP=\sum_n(R_n-R_{n-1})P_n
+\]
+where $R_n$ and $P_n$ are precision and recall at $n$ threshold. In this work we will use multi-class classification metric /mean Average Precision/ (macro metric):
+\[
+mAP=\frac{1}{K}\sum_{j=0}^KAP_j
+\]
+where $j$ is a class (category) index.
+
+The binary cross entropy as a loss function for optimization task is chosen:
+\[
+L(\hat{y},y)=-\frac{1}{K}\sum_{j=0}^K[y_j\log{\hat{y}_j}+(1-y_j)\log{(1-\hat{y}_j)}]
+\]
+where $\hat{y}$ is vector of probabilites of each class being the valid one --- output of the softmax layer.
+
+Optimization algorithms will be evaluated by number of epochs (iterations) before convergence, convergence rate and mean iteration time (seconds).
+** CNN10
+The Figure shows summarized results for optimization/training procedure for architecture CNN10.
